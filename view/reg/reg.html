@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<div id="box">
+			<h2>注册</h2>
+			<div>
+				手机号:<input type="text" id="phone" />
+				密码:<input type="text" id="pwd1" />
+				确认密码:<input type="text" id="pwd2" />
+				<span id="prompt"></span>
+			</div>
+			<div>
+				<button type="button" id="reg">注册</button>
+			</div>
+		</div>
+		<script src="/jq"></script>
+	<script>
+        getData();
+        $("#reg").click(function(){
+            var obj={
+                phone:$("#phone").val(),
+                pwd1:$("#pwd1").val(),
+                pwd2:$("#pwd2").val()
+            }
+
+            jqAjax("/addPost",obj)
+            getData ();
+        });
+
+        $("#updGet").click(function(){
+            var obj={
+                phone:$("#phone").val(),
+                pwd1:$("#pwd1").val(),
+                pwd2:$("#pwd2").val()
+            }
+            getData ();
+        });
+        function getData () {
+            $.ajax({
+                url:"/getData",
+                type:"get",
+                async:true,
+                beforeSend:function () {
+                    console.log("即将执行!");
+                },
+                success:function (data) {
+                    console.log("data:",data);
+
+                },
+                error:function (error) {
+                    console.log("error:",error);
+                },
+                complete:function () {
+                    console.log("Jquery ajax执行完成!");
+                }
+            })
+        }
+
+        function jqAjax (url,obj) {
+            $.ajax({
+                url:url,
+                type:"post",
+                async:true,
+                data:obj,
+                beforeSend:function () {
+                    console.log("即将执行!");
+                },
+                success:function (data) {
+						console.log("data:",data);
+                },
+                error:function (xhr,status,error) {
+                    // console.log("xhr:",xhr);
+                    // console.log("status:",status);
+                    console.log("error:",error);
+                },
+                complete:function () {
+                    console.log("Jquery ajax执行完成!");
+                }
+            })
+        }
+
+	</script>
+	</body>
+</html>
